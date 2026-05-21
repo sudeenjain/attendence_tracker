@@ -81,7 +81,10 @@ if (pgUrl) {
 
 } else {
     console.log('Connecting to local SQLite database...');
-    const dbPath = path.resolve(__dirname, 'attendance.db');
+    const dbPath = process.env.VERCEL
+        ? path.join('/tmp', 'attendance.db')
+        : path.resolve(__dirname, 'attendance.db');
+    
     const sqliteDb = new sqlite3.Database(dbPath, (err) => {
         if (err) {
             console.error('Error opening SQLite database', err.message);
