@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Futuristic biometric face attendance management system using high-accuracy face recognition and real-time blink-based liveness verification.">
+    <meta name="theme-color" content="#090d16">
+    <title>FaceTracker Pro - Biometric Attendance System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-elements" aria-hidden="true">
+        <div class="blob shape-1"></div>
+        <div class="blob shape-2"></div>
+        <div class="blob shape-3"></div>
+    </div>
+
+    <div class="container">
+        <div class="glass-panel">
+            <header class="header">
+                <div class="logo">
+                    <div class="logo-icon" aria-hidden="true"></div>
+                    <h1>FaceTracker<span>Pro</span></h1>
+                </div>
+                <nav class="nav" aria-label="Main Navigation">
+                    <button id="nav-dashboard" class="nav-btn active">Dashboard</button>
+                    <button id="nav-scanner" class="nav-btn">Live Scanner</button>
+                    <button id="nav-register" class="nav-btn btn-primary">Register Face</button>
+                </nav>
+            </header>
+
+            <main class="content">
+                <!-- DASHBOARD VIEW -->
+                <section id="view-dashboard" class="view active-view" aria-labelledby="dashboard-title">
+                    <div class="header-section">
+                        <h2 id="dashboard-title">Today's Attendance</h2>
+                        <p>Real-time telemetry log of scanned biometrics.</p>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat-card glass-card">
+                            <span class="stat-title">Total Present</span>
+                            <h3 id="stat-count">0</h3>
+                        </div>
+                        <div class="stat-card glass-card">
+                            <span class="stat-title">Last Scanned</span>
+                            <h3 id="stat-last">-</h3>
+                        </div>
+                    </div>
+                    <div class="table-container glass-card">
+                        <table class="attendance-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>USN / ID</th>
+                                    <th>Branch / Dept</th>
+                                    <th>Time Logged</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="attendance-log-body">
+                                <!-- Populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- SCANNER VIEW -->
+                <section id="view-scanner" class="view" aria-labelledby="scanner-title">
+                    <div class="header-section">
+                        <h2 id="scanner-title">Live Biometric Scanner</h2>
+                        <p>Align face inside target. Perform a blink when instructed for liveness check.</p>
+                    </div>
+                    <div class="scanner-container glass-card">
+                        <div class="video-wrapper">
+                            <video id="scanner-video" autoplay muted playsinline></video>
+                            <div class="overlay" aria-hidden="true">
+                                <div class="scan-frame"></div>
+                            </div>
+                        </div>
+                        <div id="scanner-status" class="status-message status-info">Initializing Camera...</div>
+                        <div id="recognized-user-card" class="recognized-card" style="display: none;">
+                            <div class="card-details">
+                                <h3 id="rc-name">Name</h3>
+                                <p><span class="badge">USN / ID</span> <span id="rc-usn">---</span></p>
+                                <p><span class="badge">Branch</span> <span id="rc-branch">---</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- REGISTER VIEW -->
+                <section id="view-register" class="view" aria-labelledby="register-title">
+                    <div class="header-section">
+                        <h2 id="register-title">Enroll Face Signature</h2>
+                        <p>Enroll your biometric data to the centralized registry.</p>
+                    </div>
+                    <div class="glass-card">
+                        <div class="register-container">
+                            <div class="video-wrapper small-video">
+                                <video id="register-video" autoplay muted playsinline></video>
+                            </div>
+                            <form id="register-form" class="register-form">
+                                <div class="form-group">
+                                    <label for="reg-name">Full Name</label>
+                                    <input type="text" id="reg-name" placeholder="John Doe" required autocomplete="off">
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-usn">USN / ID</label>
+                                    <input type="text" id="reg-usn" placeholder="1XY23CS001" required autocomplete="off">
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-branch">Branch / Department</label>
+                                    <input type="text" id="reg-branch" placeholder="Computer Science" required autocomplete="off">
+                                </div>
+                                <button type="submit" id="btn-capture" class="large-btn btn-primary">Capture & Register</button>
+                                <div id="register-status" class="status-message"></div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="face-api.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
