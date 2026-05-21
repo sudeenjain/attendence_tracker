@@ -1,6 +1,5 @@
 require('dotenv').config();
 const { Pool } = require('pg');
-const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
 let db;
@@ -81,6 +80,21 @@ if (pgUrl) {
 
 } else {
     console.log('Connecting to local SQLite database...');
+    
+    let sqlite3;
+    try {
+        sqlite3 = require('sqlite3').verbose();
+    } catch (loadError) {
+        console.error("=================================================================================");
+        console.error("FATAL: Failed to load native 'sqlite3' library.");
+        console.error("If you are running on Vercel or a serverless environment, you MUST configure the");
+        console.error("DATABASE_URL environment variable to point to a PostgreSQL/Supabase database.");
+        console.error("SQLite is a local file-based database that requires native compilation and is not");
+        console.error("compatible with Vercel's Serverless environment.");
+        console.error("=================================================================================");
+        throw new Error("sqlite3 native load failed. Configure DATABASE_URL for production.");
+    }
+
     const dbPath = process.env.VERCEL
         ? path.join('/tmp', 'attendance.db')
         : path.resolve(__dirname, 'attendance.db');
